@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Propuesta de actualización · Valoración médico-legal de discapacidad visual (AV + CV + OCT)</title>
+<style>
+  :root{
+    --ink:#1A2238;
+    --paper:#F2F4F3;
+    --paper-2:#E6EAE8;
+    --violet:#6B3F91;
+    --violet-dark:#4A2E5C;
+    --violet-soft:#F1E9F7;
+    --line:#C8D0CC;
+    --amber:#B8722A;
+    --olive:#5A7247;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Charter','Iowan Old Style',Georgia,serif;
+    padding:28px 18px 60px;
+  }
+  .wrap{max-width:980px;margin:0 auto;}
+  header{
+    border-bottom:3px solid var(--violet-dark); padding-bottom:14px; margin-bottom:26px;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap;
+  }
+  .eyebrow{
+    font-family:'Courier New',monospace; letter-spacing:.12em; font-size:11px;
+    text-transform:uppercase; color:var(--violet); margin:0 0 6px;
+  }
+  h1{font-size:25px; margin:0; line-height:1.15; font-weight:600;}
+  .ref{
+    font-family:'Courier New',monospace; font-size:11.5px; color:#555;
+    text-align:right; line-height:1.5; max-width:280px;
+  }
+
+  .banner-proposal{
+    background:var(--violet-soft); border:1px solid #A87CC7; border-radius:3px;
+    padding:12px 14px; font-size:12.5px; color:var(--violet-dark); font-family:'Helvetica Neue',Arial,sans-serif;
+    display:flex; gap:10px; align-items:flex-start; margin-bottom:30px;
+  }
+  .banner-proposal .tag{
+    font-family:'Courier New',monospace; font-weight:700; letter-spacing:.04em;
+    background:var(--violet); color:#fff; padding:2px 7px; border-radius:2px; font-size:10.5px;
+    white-space:nowrap;
+  }
+
+  .section-title{margin:34px 0 14px; display:flex; align-items:baseline; gap:10px;}
+  .section-title .n{font-family:'Courier New',monospace; color:var(--violet); font-size:13px;}
+  .section-title h2{font-size:17px; margin:0; font-weight:600; letter-spacing:.01em;}
+
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:820px){ .grid3{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;} }
+
+  .panel{background:var(--white); border:1px solid var(--line); border-radius:3px; padding:18px 18px 16px;}
+  .panel h2{
+    font-family:'Courier New',monospace; font-size:12.5px; letter-spacing:.06em;
+    text-transform:uppercase; margin:0 0 12px; color:var(--violet-dark);
+    border-bottom:1px solid var(--paper-2); padding-bottom:8px;
+  }
+  .eye-label{font-size:13px; font-weight:600; margin:14px 0 4px; color:var(--ink);}
+  .eye-label:first-of-type{margin-top:0;}
+  select, input[type=number]{
+    width:100%; padding:8px 9px; font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:13.5px; border:1px solid #9aa6a2; border-radius:2px; background:var(--white);
+    color:var(--ink);
+  }
+  select:focus, input:focus{outline:2px solid var(--violet); outline-offset:1px;}
+
+  .field-row{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--paper-2); font-size:13px; font-family:'Helvetica Neue',Arial,sans-serif;}
+  .field-row:last-child{border-bottom:none;}
+  .field-row label{flex:1;}
+  .field-row select, .field-row input{width:170px;}
+
+  /* RESULTS — propuesta (principal) */
+  .results{margin-top:30px; background:var(--violet-dark); color:#EAE0F2; border-radius:4px; padding:24px 26px 26px;}
+  .results h2{font-family:'Courier New',monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:#D2AEE8; margin:0 0 18px;}
+  .calc-row{display:flex; justify-content:space-between; font-family:'Courier New',monospace; font-size:12.5px; padding:4px 0; border-bottom:1px dotted #5a4270; color:#D9C3EC;}
+  .calc-row b{color:var(--white); font-weight:600;}
+  .final{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;}
+  @media (max-width:680px){ .final{grid-template-columns:1fr;} }
+  .stat{background:#4A3563; border-radius:3px; padding:14px 16px;}
+  .stat .lbl{font-family:'Courier New',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#D2AEE8;}
+  .stat .val{font-size:30px; font-weight:700; margin-top:4px; font-family:'Helvetica Neue',Arial,sans-serif;}
+  .stat .sub{font-size:12px; color:#D9C3EC; margin-top:2px;}
+
+  .ref-line{
+    margin-top:16px; font-family:'Courier New',monospace; font-size:11.5px; color:#B99BD1;
+    background:#33244390; padding:8px 10px; border-radius:2px;
+  }
+  .corrector-detail{
+    margin-top:8px; font-family:'Courier New',monospace; font-size:11.5px; color:#B99BD1;
+    background:#33244390; padding:8px 10px; border-radius:2px;
+  }
+
+  .scale-wrap{margin-top:22px;}
+  .scale-bar{
+    position:relative; height:34px; border-radius:3px; overflow:hidden;
+    background:linear-gradient(to right,
+      #4C7A3F 0% 4%, #7A8E3A 4% 24%, #B8722A 24% 49%, #A6532E 49% 69%,
+      #8C2F39 69% 90%, #6E1F2B 90% 95%, #3E1018 95% 100%);
+  }
+  .scale-marker{position:absolute; top:-6px; width:2px; height:46px; background:var(--white);}
+  .scale-marker::after{
+    content:attr(data-label); position:absolute; top:-22px; left:50%; transform:translateX(-50%);
+    font-family:'Courier New',monospace; font-size:11px; color:var(--white); white-space:nowrap;
+    background:var(--violet-dark); padding:2px 6px; border-radius:2px;
+  }
+  .scale-ticks{display:flex; justify-content:space-between; font-family:'Courier New',monospace; font-size:10px; color:#D2AEE8; margin-top:6px;}
+  .class-label{margin-top:14px; font-size:16px; font-weight:700; font-family:'Helvetica Neue',Arial,sans-serif;}
+  .class-desc{font-size:12.5px; color:#D9C3EC; margin-top:4px; max-width:640px;}
+
+  table.classtable{width:100%; border-collapse:collapse; margin-top:14px; font-size:12px; font-family:'Helvetica Neue',Arial,sans-serif;}
+  table.classtable th, table.classtable td{border:1px solid var(--line); padding:7px 9px; text-align:left;}
+  table.classtable thead th{background:var(--paper-2); font-family:'Courier New',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em;}
+  table.classtable tr.active td{background:#F1E9F7; font-weight:700;}
+
+  .divider{margin:46px 0 0; border:none; border-top:3px dashed var(--line);}
+
+  .banner-nolegal{
+    margin-top:18px; background:#FBF1DE; border:1px solid #D9B872; border-radius:3px;
+    padding:10px 14px; font-size:12px; color:#6B4E1D; font-family:'Helvetica Neue',Arial,sans-serif;
+    display:flex; gap:10px; align-items:flex-start;
+  }
+  .banner-nolegal .tag{
+    font-family:'Courier New',monospace; font-weight:700; letter-spacing:.04em;
+    background:var(--amber); color:#fff; padding:2px 7px; border-radius:2px; font-size:10.5px; white-space:nowrap;
+  }
+  .followup-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px;}
+  @media (max-width:780px){ .followup-grid{grid-template-columns:1fr;} }
+  .factor-row{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--paper-2); font-size:13px; font-family:'Helvetica Neue',Arial,sans-serif;}
+  .factor-row:last-child{border-bottom:none;}
+  .factor-row label{flex:1;}
+  .factor-row select{width:170px;}
+
+  .followup-results{margin-top:18px; background:#2E3A26; color:#E9EDE3; border-radius:4px; padding:22px 24px;}
+  .followup-results h2{font-family:'Courier New',monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:#C8D9A8; margin:0 0 16px;}
+  .fu-final{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:680px){ .fu-final{grid-template-columns:1fr;} }
+  .fu-stat{background:#3B4A30; border-radius:3px; padding:14px 16px;}
+  .fu-stat .lbl{font-family:'Courier New',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#BFD19E;}
+  .fu-stat .val{font-size:26px; font-weight:700; margin-top:4px; font-family:'Helvetica Neue',Arial,sans-serif;}
+  .fu-stat .sub{font-size:12px; color:#D6E0C4; margin-top:2px;}
+  .fu-note{margin-top:16px; font-size:12px; color:#C8D9A8; font-family:'Helvetica Neue',Arial,sans-serif; line-height:1.5;}
+
+  .legal{margin-top:30px; font-size:12px; color:#5b665f; border-top:1px solid var(--line); padding-top:14px; line-height:1.6;}
+  .legal b{color:var(--ink);}
+
+  @media print{ body{background:#fff;} .panel, .results, .followup-results{break-inside:avoid;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <p class="eyebrow">Propuesta de actualización · tesis doctoral</p>
+      <h1>Calculadora propuesta de valoración<br>médico-legal de discapacidad visual<br><span style="color:var(--violet);">AV + CV + OCT</span></h1>
+    </div>
+    <div class="ref">
+      Fundamentada en: RD 888/2022, de 18 de octubre<br>
+      Orden DSA/934/2023, de 19 de julio<br>
+      + corrector estructural OCT (tesis doctoral)
+    </div>
+  </header>
+
+  <div class="banner-proposal">
+    <span class="tag">PROPUESTA — NO VIGENTE</span>
+    <span>Esta calculadora integra en un único cálculo los tres parámetros — agudeza visual (AV), campo visual (CV) y hallazgos estructurales por OCT — para proponer una <b>actualización</b> de los criterios médico-legales vigentes de discapacidad visual, fundamentada en los resultados de esta tesis doctoral. No sustituye al baremo oficial (RD 888/2022, basado únicamente en AV+CV) hasta que sea validada en estudios longitudinales de mayor tamaño muestral y aprobada por las sociedades científicas y autoridades competentes.</span>
+  </div>
+
+  <div class="section-title"><span class="n">01</span><h2>Agudeza visual con mejor corrección (AVMC)</h2></div>
+  <div class="grid3">
+    <div class="panel"><h2>Ojo derecho (OD)</h2><select id="av-od"></select></div>
+    <div class="panel"><h2>Ojo izquierdo (OI)</h2><select id="av-oi"></select></div>
+    <div class="panel"><h2>Ambos ojos (AO)</h2><select id="av-ao"></select></div>
+  </div>
+
+  <div class="section-title"><span class="n">02</span><h2>Campo visual (CV)</h2></div>
+  <div class="grid3">
+    <div class="panel"><h2>Ojo derecho (OD)</h2><select id="cv-od"></select></div>
+    <div class="panel"><h2>Ojo izquierdo (OI)</h2><select id="cv-oi"></select></div>
+    <div class="panel"><h2>Ambos ojos (AO)</h2><select id="cv-ao"></select></div>
+  </div>
+
+  <div class="section-title"><span class="n">03</span><h2>Hallazgos estructurales (SD-OCT macular)</h2></div>
+  <div class="grid2">
+    <div class="panel">
+      <h2>Espesor macular central — CST (µm)</h2>
+      <div class="field-row"><label>Ojo derecho (OD)</label><input type="number" id="oct-cst-od" value="250" min="150" max="600"></div>
+      <div class="field-row"><label>Ojo izquierdo (OI)</label><input type="number" id="oct-cst-oi" value="250" min="150" max="600"></div>
+    </div>
+    <div class="panel">
+      <h2>Edema macular diabético (EMD) confirmado</h2>
+      <div class="field-row"><label>Ojo derecho (OD)</label><select id="oct-emd-od"><option value="0">No</option><option value="1">Sí</option></select></div>
+      <div class="field-row"><label>Ojo izquierdo (OI)</label><select id="oct-emd-oi"><option value="0">No</option><option value="1">Sí</option></select></div>
+    </div>
+  </div>
+
+  <div class="results">
+    <h2>Resultado de la valoración propuesta</h2>
+
+    <div class="calc-row"><span>EAV<sub>OD</sub> / EAV<sub>OI</sub> / EAV<sub>AO</sub></span><b id="r-eav">—</b></div>
+    <div class="calc-row"><span>ECV<sub>OD</sub> / ECV<sub>OI</sub> / ECV<sub>AO</sub></span><b id="r-ecv">—</b></div>
+    <div class="calc-row"><span>EAF = (3·EAV<sub>AO</sub> + EAV<sub>OD</sub> + EAV<sub>OI</sub>) / 5</span><b id="r-eaf">—</b></div>
+    <div class="calc-row"><span>ECF = (3·ECV<sub>AO</sub> + ECV<sub>OD</sub> + ECV<sub>OI</sub>) / 5</span><b id="r-ecf">—</b></div>
+    <div class="calc-row"><span>EVF = EAF × ECF / 100</span><b id="r-evf">—</b></div>
+    <div class="calc-row"><span>DSV(AV+CV) = 100 − EVF</span><b id="r-dsv-base">—</b></div>
+    <div class="calc-row" style="border-bottom:none;"><span>Corrector estructural OCT</span><b id="r-corrector">+0</b></div>
+
+    <div class="final">
+      <div class="stat">
+        <div class="lbl">DSV propuesto (AV + CV + OCT)</div>
+        <div class="val" id="big-dsv">—</div>
+        <div class="sub" id="sub-dsv">Pendiente de datos</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">DTP propuesto</div>
+        <div class="val" id="big-dtp">—</div>
+        <div class="sub">Interpolación sobre tabla de conversión DSV→DTP</div>
+      </div>
+    </div>
+
+    <div class="ref-line" id="ref-oficial">Referencia — DSV según baremo vigente (RD 888/2022, solo AV+CV, sin corrector OCT): —</div>
+    <div class="corrector-detail" id="corrector-detail">Detalle del corrector estructural: sin hallazgos relevantes</div>
+
+    <div class="scale-wrap">
+      <div class="scale-bar"><div class="scale-marker" id="marker" style="left:0%;" data-label=""></div></div>
+      <div class="scale-ticks"><span>0</span><span>4</span><span>24</span><span>49</span><span>69</span><span>90</span><span>95</span><span>100</span></div>
+      <div class="class-label" id="class-label">—</div>
+      <div class="class-desc" id="class-desc">Seleccione los valores de AV, CV y OCT para calcular la clasificación propuesta.</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="n">04</span><h2>Tabla de clasificación propuesta (DSV)</h2></div>
+  <table class="classtable" id="classtable">
+    <thead><tr><th>Rango DSV (%)</th><th>Categoría</th><th>Equivalencia funcional aproximada</th></tr></thead>
+    <tbody>
+      <tr data-min="0" data-max="4"><td>0 – 4</td><td>Deficiencia visual insignificante</td><td>Sin repercusión funcional relevante</td></tr>
+      <tr data-min="5" data-max="24"><td>5 – 24</td><td>Deficiencia visual leve</td><td>Visión casi normal / deficiencia leve</td></tr>
+      <tr data-min="25" data-max="49"><td>25 – 49</td><td>Deficiencia visual moderada</td><td>Dificultad funcional moderada (G1)</td></tr>
+      <tr data-min="50" data-max="69"><td>50 – 69</td><td>Deficiencia visual grave</td><td>Dependencia de ayudas ópticas (G2)</td></tr>
+      <tr data-min="70" data-max="90"><td>70 – 90</td><td>Deficiencia visual profunda</td><td>Uso de bastón / ayudas para movilidad (G3)</td></tr>
+      <tr data-min="91" data-max="95"><td>91 – 95</td><td>Casi ceguera</td><td>Orientación poco fiable, bastón largo (G4)</td></tr>
+      <tr data-min="96" data-max="100"><td>96 – 100</td><td>Deficiencia visual total / ceguera</td><td>Ceguera legal (G5)</td></tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+  <div class="section-title"><span class="n">05</span><h2>Seguimiento clínico recomendado según riesgo de progresión</h2></div>
+  <div class="banner-nolegal">
+    <span class="tag">SIN VALOR LEGAL</span>
+    <span>Este módulo no modifica el DSV ni el DTP propuestos arriba. Utiliza los factores de riesgo de progresión de RD identificados en el estudio (tabla 37, calculadora cualitativa IRRD) únicamente para orientar la <b>periodicidad de la reevaluación médico-legal</b>, no el porcentaje de discapacidad.</span>
+  </div>
+
+  <div class="followup-grid">
+    <div class="panel">
+      <h2>Factores de riesgo de progresión</h2>
+      <div class="factor-row"><label>Duración de la DM2</label>
+        <select id="fu-duracion"><option value="0">&lt; 5 años</option><option value="1">5 – 10 años</option><option value="2">&gt; 10 años</option></select></div>
+      <div class="factor-row"><label>Hipertensión arterial (HTA)</label><select id="fu-hta"><option value="0">No</option><option value="1">Sí</option></select></div>
+      <div class="factor-row"><label>Dieta baja en carbohidratos</label><select id="fu-dieta"><option value="0">Sí</option><option value="1">No</option></select></div>
+      <div class="factor-row"><label>Ejercicio físico moderado regular</label><select id="fu-ejercicio"><option value="0">Sí</option><option value="1">No</option></select></div>
+      <div class="factor-row"><label>Consumo de tabaco (actual)</label><select id="fu-tabaco"><option value="0">No</option><option value="1">Sí</option></select></div>
+      <div class="factor-row"><label>Consumo de alcohol (&gt;2 vasos de vino/día)</label><select id="fu-alcohol"><option value="0">No</option><option value="1">Sí</option></select></div>
+      <div class="factor-row"><label>Índice de masa corporal (IMC)</label>
+        <select id="fu-imc"><option value="0">&lt; 25 kg/m²</option><option value="1">25 – 30 kg/m²</option><option value="2">&gt; 30 kg/m²</option></select></div>
+      <div class="factor-row"><label>HbA1c</label><select id="fu-hba1c"><option value="0">≤ 6,5 %</option><option value="1">&gt; 6,5 %</option></select></div>
+    </div>
+
+    <div class="panel">
+      <h2>Cómo se usa esta puntuación</h2>
+      <p style="font-size:13px;font-family:'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#3a443f;">
+        La puntuación IRRD cualitativa (tabla 37) estratifica el riesgo de progresión de la retinopatía diabética en tres bandas. Aquí se traduce esa banda en un <b>intervalo de reevaluación oftalmológica/médico-legal sugerido</b>, ajustado además por la gravedad funcional ya detectada (DSV propuesto) en los apartados 1–4.
+      </p>
+      <p style="font-size:13px;font-family:'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#3a443f;">
+        Si el DSV propuesto ya es ≥50% (grave o peor), el intervalo se acorta independientemente del riesgo, ya que la prioridad pasa a ser el control evolutivo de una deficiencia ya relevante.
+      </p>
+    </div>
+  </div>
+
+  <div class="followup-results">
+    <h2>Recomendación de seguimiento</h2>
+    <div class="fu-final">
+      <div class="fu-stat">
+        <div class="lbl">Puntuación de riesgo de progresión (IRRD cualitativo)</div>
+        <div class="val" id="fu-score">—</div>
+        <div class="sub" id="fu-band">Pendiente de datos</div>
+      </div>
+      <div class="fu-stat">
+        <div class="lbl">Intervalo de reevaluación sugerido</div>
+        <div class="val" id="fu-interval">—</div>
+        <div class="sub" id="fu-interval-note">Combina riesgo de progresión + DSV propuesto</div>
+      </div>
+    </div>
+    <div class="fu-note" id="fu-explain">Completa los factores de riesgo para obtener una recomendación.</div>
+  </div>
+
+  <div class="legal">
+    <b>Notas metodológicas.</b> Esta herramienta unifica en un solo algoritmo tres criterios — AV, CV y hallazgos estructurales por OCT — como propuesta de actualización de los criterios médico-legales de discapacidad visual, motivada por los hallazgos de esta tesis doctoral (disociación entre AV/CV conservadas y alteraciones estructurales precoces detectables por OCT). El cálculo de EAV (tabla 13) y ECV (tabla 14) sigue el marco del RD 888/2022; el corrector estructural (+2 puntos/ojo si CST &gt; 300 µm sin EMD confirmado; +5 puntos/ojo si hay EMD confirmado por OCT) es una <b>propuesta provisional</b> fundamentada en los datos descriptivos de la cohorte de la tesis (CST y prevalencia de EMD por grupo), pendiente de calibración mediante análisis de sensibilidad/especificidad en estudios longitudinales con mayor tamaño muestral. La conversión DSV→DTP se interpola linealmente sobre la tabla de conversión oficial. Esta calculadora es una herramienta de apoyo a la discusión científica y no sustituye el baremo oficial vigente ni el juicio clínico del especialista hasta su eventual validación y aprobación normativa.
+  </div>
+</div>
+
+<script>
+// ---------- DATA: Tabla 13 (AV -> EAV) ----------
+const AV_OPTIONS = [
+  {label:"20/12,5  (mejor que la normal)", eav:110},
+  {label:"20/16", eav:105},
+  {label:"20/20  (decimal 1,0)", eav:100},
+  {label:"20/25  (decimal 0,8)", eav:95},
+  {label:"20/30  (decimal 0,6)", eav:90},
+  {label:"20/40  (decimal 0,5)", eav:85},
+  {label:"20/50  (decimal 0,4)", eav:80},
+  {label:"20/63  (decimal 0,3)", eav:75},
+  {label:"20/80  (decimal 0,25)", eav:70},
+  {label:"20/100  (decimal 0,2)", eav:65},
+  {label:"20/125  (decimal 0,16)", eav:60},
+  {label:"20/160  (decimal 0,125)", eav:55},
+  {label:"20/200  (decimal 0,10)", eav:40},
+  {label:"20/300", eav:35},
+  {label:"20/400  (decimal 0,05)", eav:30},
+  {label:"20/630  (cuenta dedos a 3 m)", eav:25},
+  {label:"20/800  (cuenta dedos a 1 m)", eav:20},
+  {label:"20/1000  (movimiento de mano)", eav:15},
+  {label:"20/1250  (percepción de luz)", eav:10},
+  {label:"20/1600 a 20/2000 o peor  (percepción de luz)", eav:5},
+  {label:"Sin percepción de luz (ceguera total)", eav:0},
+];
+
+// ---------- DATA: Tabla 14 (CV -> ECV) ----------
+const CV_OPTIONS = [
+  {label:"Campo visual normal (≥ 60°)", ecv:100},
+  {label:"Pérdida < 1 cuadrante", ecv:95},
+  {label:"50°  /  pérdida de 1 cuadrante (cuadrantanopsia homónima)", ecv:90},
+  {label:"45°  /  pérdida > 1 cuadrante", ecv:85},
+  {label:"40°", ecv:80},
+  {label:"35°  /  pérdida de la parte superior del campo", ecv:75},
+  {label:"30°", ecv:70},
+  {label:"25°", ecv:65},
+  {label:"20°", ecv:60},
+  {label:"15°", ecv:55},
+  {label:"Hemianopsia homónima / pérdida inferior del campo / pérdida > 2 cuadrantes", ecv:50},
+  {label:"10°", ecv:40},
+  {label:"7°", ecv:35},
+  {label:"6°", ecv:30},
+  {label:"5°", ecv:25},
+  {label:"4°", ecv:20},
+  {label:"3°", ecv:15},
+  {label:"2°", ecv:10},
+  {label:"1°", ecv:5},
+  {label:"Sin campo visual (0°)", ecv:0},
+];
+
+// ---------- DATA: Tabla 15 (DSV -> DTP) ----------
+const DSV_DTP = [
+  [0,0],[5,5],[10,10],[15,15],[20,20],[25,25],[30,30],[35,35],[40,40],
+  [45,45],[50,50],[55,55],[60,60],[65,65],[70,70],[75,75],[80,78],
+  [85,79],[90,80],[95,82],[100,85]
+];
+
+function dtpFromDsv(dsv){
+  for(let i=0;i<DSV_DTP.length-1;i++){
+    const [d0,t0]=DSV_DTP[i], [d1,t1]=DSV_DTP[i+1];
+    if(dsv>=d0 && dsv<=d1){
+      const frac=(dsv-d0)/(d1-d0);
+      return t0 + frac*(t1-t0);
+    }
+  }
+  return dsv<=0?0:85;
+}
+
+function classify(dsv){
+  if(dsv<=4) return ["Deficiencia visual insignificante","Sin repercusión funcional relevante en las actividades de la vida diaria."];
+  if(dsv<=24) return ["Deficiencia visual leve","Visión casi normal; capacidad de lectura conservada, sin necesidad de ayudas relevantes."];
+  if(dsv<=49) return ["Deficiencia visual moderada","Dificultad funcional moderada; puede requerir ayudas ópticas para tareas de precisión y lectura."];
+  if(dsv<=69) return ["Deficiencia visual grave","Dependencia significativa de ayudas para la lectura y la movilidad; rendimiento visual claramente reducido."];
+  if(dsv<=90) return ["Deficiencia visual profunda","Movilidad y orientación comprometidas; uso habitual de bastón u otras ayudas técnicas."];
+  if(dsv<=95) return ["Casi ceguera","Orientación visual poco fiable; dependencia de bastón largo, sonidos u otras ayudas no visuales."];
+  return ["Deficiencia visual total / ceguera legal","Ausencia funcional de visión útil; ceguera legal a efectos de discapacidad."];
+}
+
+function fillSelect(sel, options, valueKey, defaultIndex){
+  sel.innerHTML = options.map((o)=>`<option value="${o[valueKey]}">${o.label}</option>`).join("");
+  sel.selectedIndex = defaultIndex;
+}
+
+["av-od","av-oi","av-ao"].forEach(id=> fillSelect(document.getElementById(id), AV_OPTIONS, "eav", 2));
+["cv-od","cv-oi","cv-ao"].forEach(id=> fillSelect(document.getElementById(id), CV_OPTIONS, "ecv", 0));
+
+function num(id){ return parseFloat(document.getElementById(id).value); }
+
+function structuralCorrector(){
+  const cstOD = parseFloat(document.getElementById("oct-cst-od").value) || 0;
+  const cstOI = parseFloat(document.getElementById("oct-cst-oi").value) || 0;
+  const emdOD = document.getElementById("oct-emd-od").value === "1";
+  const emdOI = document.getElementById("oct-emd-oi").value === "1";
+
+  let points = 0;
+  let details = [];
+  [["OD",cstOD,emdOD],["OI",cstOI,emdOI]].forEach(([eye,cst,emd])=>{
+    if(emd){ points += 5; details.push(`${eye}: EMD confirmado (+5)`); }
+    else if(cst > 300){ points += 2; details.push(`${eye}: CST ${cst}µm > 300 (+2, subclínico)`); }
+  });
+  return {points, details};
+}
+
+function recalc(){
+  const eavOD=num("av-od"), eavOI=num("av-oi"), eavAO=num("av-ao");
+  const ecvOD=num("cv-od"), ecvOI=num("cv-oi"), ecvAO=num("cv-ao");
+
+  const EAF = (3*eavAO + eavOD + eavOI) / 5;
+  const ECF = (3*ecvAO + ecvOD + ecvOI) / 5;
+  const EVF = EAF * ECF / 100;
+  const DSV_base = Math.max(0, Math.min(100, 100 - EVF));
+
+  const {points, details} = structuralCorrector();
+  const DSV = Math.min(100, DSV_base + points);
+  const DTP = dtpFromDsv(DSV);
+  const [label, desc] = classify(DSV);
+
+  document.getElementById("r-eav").textContent = `${eavOD} / ${eavOI} / ${eavAO}`;
+  document.getElementById("r-ecv").textContent = `${ecvOD} / ${ecvOI} / ${ecvAO}`;
+  document.getElementById("r-eaf").textContent = EAF.toFixed(1);
+  document.getElementById("r-ecf").textContent = ECF.toFixed(1);
+  document.getElementById("r-evf").textContent = EVF.toFixed(2);
+  document.getElementById("r-dsv-base").textContent = DSV_base.toFixed(2) + " %";
+  document.getElementById("r-corrector").textContent = "+" + points;
+
+  document.getElementById("big-dsv").textContent = DSV.toFixed(1) + "%";
+  document.getElementById("big-dtp").textContent = DTP.toFixed(1) + "%";
+  document.getElementById("sub-dsv").textContent = label;
+
+  document.getElementById("class-label").textContent = label + ` (DSV ${DSV.toFixed(1)}%)`;
+  document.getElementById("class-desc").textContent = desc;
+
+  document.getElementById("ref-oficial").textContent =
+    `Referencia — DSV según baremo vigente (RD 888/2022, solo AV+CV, sin corrector OCT): ${DSV_base.toFixed(1)}%`;
+
+  const detailText = details.length ? details.join(" · ") : "sin hallazgos estructurales por encima del umbral propuesto";
+  document.getElementById("corrector-detail").textContent = `Detalle del corrector estructural: ${detailText}`;
+
+  const marker = document.getElementById("marker");
+  marker.style.left = DSV + "%";
+  marker.setAttribute("data-label", DSV.toFixed(1)+"%");
+
+  document.querySelectorAll("#classtable tbody tr").forEach(tr=>{
+    const min=parseFloat(tr.dataset.min), max=parseFloat(tr.dataset.max);
+    tr.classList.toggle("active", DSV>=min && DSV<=max);
+  });
+
+  recalcFollowup(DSV);
+}
+
+// ---------- Módulo de seguimiento (IRRD cualitativo, tabla 37) — sin valor legal ----------
+const fuIds = ["fu-duracion","fu-hta","fu-dieta","fu-ejercicio","fu-tabaco","fu-alcohol","fu-imc","fu-hba1c"];
+
+function riskBand(score){
+  if(score<=5) return {label:"Riesgo bajo", color:"#4C7A3F"};
+  if(score<=9) return {label:"Riesgo moderado", color:"#B8722A"};
+  return {label:"Riesgo elevado", color:"#8C2F39"};
+}
+function baseInterval(score){
+  if(score<=5) return {months:"24–36 meses", note:"Riesgo bajo de progresión: revisión espaciada."};
+  if(score<=9) return {months:"12–18 meses", note:"Riesgo moderado: seguimiento intermedio."};
+  return {months:"6–12 meses", note:"Riesgo elevado: seguimiento estrecho recomendado."};
+}
+
+function recalcFollowup(currentDSV){
+  const vals = fuIds.map(id=> parseInt(document.getElementById(id).value,10));
+  const [duracion,hta,dieta,ejercicio,tabaco,alcohol,imc,hba1c] = vals;
+  const score = duracion + hta + dieta + ejercicio + tabaco + alcohol + imc + hba1c;
+
+  const band = riskBand(score);
+  let interval = baseInterval(score);
+  let adjustedNote = interval.note;
+
+  if(currentDSV>=70){
+    interval = {months:"3–6 meses"};
+    adjustedNote = "DSV propuesto ≥70% (deficiencia profunda o peor): prioridad de control evolutivo, independientemente del riesgo de progresión.";
+  } else if(currentDSV>=50){
+    if(interval.months !== "6–12 meses"){ interval = {months:"6–12 meses"}; }
+    adjustedNote = "DSV propuesto ≥50% (deficiencia grave): intervalo acotado a un máximo de 12 meses.";
+  }
+
+  document.getElementById("fu-score").textContent = score + " / 10";
+  const bandEl = document.getElementById("fu-band");
+  bandEl.textContent = band.label;
+  bandEl.style.color = band.color;
+  document.getElementById("fu-interval").textContent = interval.months;
+  document.getElementById("fu-interval-note").textContent = "Combina riesgo de progresión + DSV propuesto";
+  document.getElementById("fu-explain").innerHTML =
+    `<b>${band.label}</b> (puntuación ${score}/10) — ${adjustedNote} Recuerda: este intervalo es una orientación clínica derivada del modelo IRRD cualitativo de la tesis; no altera el DSV/DTP propuesto en los apartados 1–4.`;
+}
+
+document.querySelectorAll("#av-od, #av-oi, #av-ao, #cv-od, #cv-oi, #cv-ao").forEach(s=> s.addEventListener("change", recalc));
+document.querySelectorAll("#oct-cst-od, #oct-cst-oi").forEach(s=> s.addEventListener("input", recalc));
+document.querySelectorAll("#oct-emd-od, #oct-emd-oi").forEach(s=> s.addEventListener("change", recalc));
+fuIds.forEach(id=> document.getElementById(id).addEventListener("change", ()=>{
+  const dsv = parseFloat(document.getElementById("big-dsv").textContent) || 0;
+  recalcFollowup(dsv);
+}));
+
+recalc();
+</script>
+</body>
+</html>
